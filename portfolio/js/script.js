@@ -4,7 +4,7 @@
 
 // Configuration
 const CONFIG = {
-    animateLibrary: 'https://cdnjs.cloudflare.com/ajax/libs/animate.js/3.7.2/animate.min.js',
+    animateLibrary: 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js',
     animationDuration: 0.6,
     staggerDelay: 0.1,
     scrollBehavior: 'smooth'
@@ -21,9 +21,10 @@ const state = {
 const portfolioData = [
     {
         id: 1,
-        title: 'Project One',
-        description: 'A modern web application built with responsive design',
-        image: 'assets/images/project1.jpg',
+        title: 'Quantum Portal',
+        description: 'Next-generation web portal featuring WebGL shader backgrounds, dynamic fluid simulation, and cybernetic user interface modules.',
+        image: 'https://images.unsplash.com/photo-1709626011485-6fe000ea2dbc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTAwNDR8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGRhcmslMjBnZW9tZXRyaWMlMjAzRCUyMHJlbmRlcmluZyUyMHdpdGglMjBjeWFuJTIwaGlnaGxpZ2h0c3xlbnwwfHx8fDE3ODE5ODkwMTV8MA&ixlib=rb-4.1.0&q=85',
+        bentoClass: 'card-large',
         links: [
             { text: 'Live', url: '#' },
             { text: 'Code', url: '#' }
@@ -31,9 +32,10 @@ const portfolioData = [
     },
     {
         id: 2,
-        title: 'Project Two',
-        description: 'Interactive dashboard with smooth animations',
-        image: 'assets/images/project2.jpg',
+        title: 'Neural Dashboard',
+        description: 'Interactive telemetry hub integrating real-time server statistics, custom charting libraries, and high-frequency data streams.',
+        image: 'https://images.unsplash.com/photo-1579567761406-4684ee0c75b6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTAwNDR8MHwxfHNlYXJjaHw4fHxhYnN0cmFjdCUyMGRhcmslMjBnZW9tZXRyaWMlMjAzRCUyMHJlbmRlcmluZyUyMHdpdGglMjBjeWFuJTIwaGlnaGxpZ2h0c3xlbnwwfHx8fDE3ODE5ODkwMTV8MA&ixlib=rb-4.1.0&q=85',
+        bentoClass: 'card-tall',
         links: [
             { text: 'Live', url: '#' },
             { text: 'Code', url: '#' }
@@ -41,9 +43,20 @@ const portfolioData = [
     },
     {
         id: 3,
-        title: 'Project Three',
-        description: 'E-commerce platform with custom animations',
-        image: 'assets/images/project3.jpg',
+        title: 'Aether Engine',
+        description: 'A physical rendering toolkit optimized for minimal bundle footprint and hardware-accelerated fluid motion.',
+        image: 'https://images.unsplash.com/photo-1707730376818-a7a02fe896d5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTAwNDR8MHwxfHNlYXJjaHw5fHxhYnN0cmFjdCUyMGRhcmslMjBnZW9tZXRyaWMlMjAzRCUyMHJlbmRlcmluZyUyMHdpdGglMjBjeWFuJTIwaGlnaGxpZ2h0c3xlbnwwfHx8fDE3ODE5ODkwMTV8MA&ixlib=rb-4.1.0&q=85',
+        bentoClass: 'card-standard',
+        links: [
+            { text: 'Live', url: '#' }
+        ]
+    },
+    {
+        id: 4,
+        title: 'Vortex Protocol',
+        description: 'A decentralized finance routing visualizer presenting transactions as self-organizing particle nodes on a glass canvas.',
+        image: 'https://images.unsplash.com/photo-1524169220946-12efd782aab4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTAwNDR8MHwxfHNlYXJjaHwxMnx8YWJzdHJhY3QlMjBkYXJrJTIwZ2VvbWV0cmljJTIwM0QlMjByZW5kZXJpbmclMjB3aXRoJTIwY3lhbiUyMGhpZ2hsaWdodHN8ZW58MHx8fHwxNzgxOTg5MDE1fDA&ixlib=rb-4.1.0&q=85',
+        bentoClass: 'card-wide',
         links: [
             { text: 'Live', url: '#' },
             { text: 'Code', url: '#' }
@@ -205,7 +218,7 @@ function populatePortfolio() {
     if (!portfolioGrid) return;
 
     portfolioGrid.innerHTML = portfolioData.map((project, index) => `
-        <div class="portfolio-card animate-slide-up" style="animation-delay: ${index * CONFIG.staggerDelay}s;">
+        <div class="portfolio-card ${project.bentoClass || ''} animate-slide-up" style="animation-delay: ${index * CONFIG.staggerDelay}s;">
             <img src="${project.image}" alt="${project.title}" class="portfolio-image" loading="lazy">
             <div class="portfolio-info">
                 <h3 class="portfolio-title">${project.title}</h3>
@@ -402,21 +415,21 @@ function initializeHeroAnimations() {
 // ============================================================================
 
 function checkAnimateLibraryAvailability() {
-    if (typeof animate !== 'undefined') {
+    if (typeof anime !== 'undefined') {
         state.animateLibraryLoaded = true;
-        console.log('Animate.js library loaded successfully');
+        console.log('Anime.js library loaded successfully');
     } else {
-        console.warn('Animate.js library not available, using CSS animations as fallback');
+        console.warn('Anime.js library not available, using CSS animations as fallback');
     }
 }
 
 function applyAnimateEffect(element, effect, duration = 0.6) {
-    if (state.animateLibraryLoaded && typeof animate !== 'undefined') {
-        // Use Animate.js if available
-        animate({
+    if (state.animateLibraryLoaded && typeof anime !== 'undefined') {
+        // Use Anime.js if available
+        anime({
             targets: element,
             duration: duration * 1000,
-            easing: 'easeInOutQuad',
+            easing: 'easeOutQuad',
             opacity: [0, 1],
             translateY: [effect.includes('Down') ? -30 : 30, 0]
         });
